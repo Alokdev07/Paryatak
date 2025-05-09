@@ -132,25 +132,41 @@ export default function LandingPage() {
   return (
     <div className="font-sans text-white bg-[#0d1117]">
       {/* Page 1: Introduction */}
-      <section className="min-h-screen flex flex-col justify-center items-center text-center px-4 pt-12 pb-0 bg-gradient-to-b from-[#161b22] to-[#0d1117]">
-        <h1 className="text-5xl font-bold intro-text">Explore the World with Us</h1>
-        <p className="mt-4 text-xl text-gray-400 intro-subtext max-w-2xl">
-          Unleash your wanderlust with personalized adventures, budget-friendly trips, and premium experiences.
-        </p>
-        <div className="mt-6 space-y-2 intro-features">
-          <p className="text-lg text-gray-300">🛏️  Book Hotels Easily</p>
-          <p className="text-lg text-gray-300">🎯  Discover Adventure Destinations</p>
-          <p className="text-lg text-gray-300">🗺️  Plan & Customize Your Trips</p>
-        </div>
-        <div className="mt-10 flex flex-wrap gap-6 justify-center intro-buttons">
-          <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-lg font-semibold rounded-full hover:scale-105 transition-transform">
-            Get Started
-          </button>
-          <button className="px-6 py-3 border border-purple-500 text-purple-400 text-lg font-semibold rounded-full hover:bg-purple-600 hover:text-white transition-transform hover:scale-105">
-            View Packages
-          </button>
-        </div>
-      </section>
+      <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-4 pt-12 pb-0 overflow-hidden">
+  
+  <video
+    className="absolute top-0 left-0 w-full h-full object-cover opacity-40 z-0"
+    autoPlay
+    muted
+    loop
+    playsInline
+  >
+    <source src="/videos/incredible-india.mp4" type="video/mp4" />
+   
+  </video>
+
+
+  <div className="relative z-10 text-white">
+    <h1 className="text-5xl font-bold intro-text">Explore the World with Us</h1>
+    <p className="mt-4 text-xl text-gray-200 intro-subtext max-w-2xl">
+      Unleash your wanderlust with personalized adventures, budget-friendly trips, and premium experiences.
+    </p>
+    <div className="mt-6 space-y-2 intro-features">
+      <p className="text-lg">🛏️ Book Hotels Easily</p>
+      <p className="text-lg">🎯 Discover Adventure Destinations</p>
+      <p className="text-lg">🗺️ Plan & Customize Your Trips</p>
+    </div>
+    <div className="mt-10 flex flex-wrap gap-6 justify-center intro-buttons">
+      <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-lg font-semibold rounded-full hover:scale-105 transition-transform">
+        Get Started
+      </button>
+      <button className="px-6 py-3 border border-purple-500 text-purple-400 text-lg font-semibold rounded-full hover:bg-purple-600 hover:text-white transition-transform hover:scale-105">
+        View Packages
+      </button>
+    </div>
+  </div>
+</section>
+
 
       {/* Page 2: Carousel */}
       <section className="overflow-hidden py-16 bg-[#0d1117]">
