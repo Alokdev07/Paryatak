@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 12px #6366f1;
+  }
+  50% {
+    box-shadow: 0 0 24px #9333ea;
+  }
+}
+
+.animate-glow {
+  animation: glowPulse 2s infinite ease-in-out;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.glow {
+  text-shadow: 0 0 6px #facc15, 0 0 12px #facc15;
+}
+
+.glow-hover:hover {
+  text-shadow: 0 0 8px #facc15, 0 0 16px #facc15;
+}
+
+.shadow-yellow {
+  box-shadow: 0 0 10px #facc15, 0 0 20px #facc15;
+}
+
+/* Ensure proper stacking */
+nav {
+  position: relative;
+  z-index: 1000;
+}
+
+/* Prevent layout shift */
+html {
+  scroll-padding-top: 100px; /* Height of your navbar */
+}
