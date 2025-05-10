@@ -6,16 +6,29 @@ import '../App.css';
 import heroImage from '../assets/ganga.jpg';
 import Slide from '../components/FullScreenSlider.jsx'
 import FlightBookingUI from "../components/FlightBookingUi.jsx";
-
+import { useState,useEffect } from "react";
+import teamImg1 from "../assets/ganga.jpg";
+import teamImg2 from "../assets/ganga.jpg";
+import teamImg3 from "../assets/ganga.jpg";
+import heroImg from "../assets/ganga.jpg"; 
+import SmartOwnershipAnimation from "../components/SmartOwnershipAnimation .jsx";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const allSections = document.querySelectorAll("section");
+
 export default function LandingPage() {
   useGSAP(() => {
-    // Existing animations...
+    // Basic entry animations
     gsap.from(".intro-text", { opacity: 0, y: -60, duration: 1.4, ease: "power3.out" });
     gsap.from(".intro-subtext", { opacity: 0, y: -20, duration: 1, delay: 0.3, ease: "power2.out" });
-    gsap.from(".intro-features p", { opacity: 0, y: 20, duration: 1, stagger: 0.2, delay: 0.6 });
+    gsap.from(".intro-features p", {
+      opacity: 0,
+      y: 20,
+      duration: 1,
+      stagger: 0.2,
+      delay: 0.6
+    });
     gsap.from(".intro-buttons button", {
       opacity: 0,
       scale: 0.8,
@@ -29,60 +42,60 @@ export default function LandingPage() {
     gsap.from(".prize-box", { opacity: 0, y: 30, duration: 1, delay: 0.5, stagger: 0.3 });
     gsap.from(".footer", { opacity: 0, y: 50, duration: 1.5, delay: 1 });
 
-    // Existing ScrollTrigger animations...
-
-    // NEW: Zoom-in animation for all sections when they come into view
+    // Zoom-in effect for sections on scroll
     const sections = document.querySelectorAll("section");
-    
+
     sections.forEach((section) => {
       ScrollTrigger.create({
         trigger: section,
         start: "top 80%",
         end: "bottom 20%",
         onEnter: () => {
-          gsap.fromTo(section, 
-            { scale: 0.95, opacity: 0.8 , x : 0, y : 0}, 
-            { 
-              scale: 1, 
-              opacity: 1, 
-              duration: 1, 
+          gsap.fromTo(
+            section,
+            { scale: 0.95, opacity: 0.8, x: 0, y: 0 },
+            {
+              scale: 1,
+              opacity: 1,
+              duration: 1,
               ease: "power3.out",
-              clearProps: "all" // Clears inline styles when animation completes
+              clearProps: "all"
             }
           );
         },
         onLeave: () => {
-          gsap.to(section, { 
-            scale: 0.95, 
-            opacity: 0.8, 
-            duration: 0.5, 
-            ease: "power2.in" 
+          gsap.to(section, {
+            scale: 0.95,
+            opacity: 0.8,
+            duration: 0.5,
+            ease: "power2.in"
           });
         },
         onEnterBack: () => {
-          gsap.fromTo(section, 
-            { scale: 0.95, opacity: 0.8 }, 
-            { 
-              scale: 1, 
-              opacity: 1, 
-              duration: 1, 
+          gsap.fromTo(
+            section,
+            { scale: 0.95, opacity: 0.8 },
+            {
+              scale: 1,
+              opacity: 1,
+              duration: 1,
               ease: "power3.out",
               clearProps: "all"
             }
           );
         },
         onLeaveBack: () => {
-          gsap.to(section, { 
-            scale: 0.95, 
-            opacity: 0.8, 
-            duration: 0.5, 
-            ease: "power2.in" 
+          gsap.to(section, {
+            scale: 0.95,
+            opacity: 0.8,
+            duration: 0.5,
+            ease: "power2.in"
           });
         }
       });
     });
 
-    // More specific section animations (can coexist with the general one above)
+    // Specific animations
     ScrollTrigger.create({
       trigger: ".intro-text",
       start: "top center",
@@ -92,7 +105,7 @@ export default function LandingPage() {
       },
       onLeaveBack: () => {
         gsap.to(".intro-text", { opacity: 0, scale: 0.8, duration: 1, ease: "power2.in" });
-      },
+      }
     });
 
     ScrollTrigger.create({
@@ -104,7 +117,7 @@ export default function LandingPage() {
       },
       onLeaveBack: () => {
         gsap.to(".carousel", { opacity: 0, scale: 0.8, duration: 1, ease: "power2.in" });
-      },
+      }
     });
 
     ScrollTrigger.create({
@@ -116,7 +129,7 @@ export default function LandingPage() {
       },
       onLeaveBack: () => {
         gsap.to(".prize-box", { opacity: 0, y: 100, duration: 1, ease: "power2.in" });
-      },
+      }
     });
 
     ScrollTrigger.create({
@@ -124,10 +137,58 @@ export default function LandingPage() {
       start: "top 90%",
       onEnter: () => {
         gsap.fromTo(".footer", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" });
-      },
+      }
     });
 
+    // Highlight only active section
+    allSections.forEach((section, index) => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top center",
+        end: "bottom center",
+        onEnter: () => {
+          allSections.forEach((s, i) => {
+            if (i !== index) {
+              gsap.to(s, {
+                scale: 0.95,
+                opacity: 0.8,
+                duration: 0.3,
+                ease: "power1.inOut"
+              });
+            }
+          });
+
+          gsap.to(section, {
+            scale: 1,
+            opacity: 1,
+            duration: 1,
+            ease: "power3.out"
+          });
+        },
+        onEnterBack: () => {
+          allSections.forEach((s, i) => {
+            if (i !== index) {
+              gsap.to(s, {
+                scale: 0.95,
+                opacity: 0.8,
+                duration: 0.3,
+                ease: "power1.inOut"
+              });
+            }
+          });
+
+          gsap.to(section, {
+            scale: 1,
+            opacity: 1,
+            duration: 1,
+            ease: "power3.out"
+          });
+        }
+      });
+    });
   }, []);
+
+
 
   return (
     <div className="font-sans text-white bg-[#0d1117]">
@@ -206,93 +267,107 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="bg-[#0d1117] py-20 px-6 text-center">
-<h2 className="text-5xl font-extrabold mb-14 text-white tracking-wide">
-  💬 What Our Travelers Say
-</h2>
+  <section className="w-full px-4 py-20 bg-[#0d1117]">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center bg-[#0d1117] rounded-3xl overflow-hidden shadow-lg">
+        {/* LEFT SIDE */}
+        <div className="p-10">
+          <p className="text-white text-lg mb-4">
+            At Golden Gate Properties, we offer more than just real estate services;
+            we provide an unparalleled experience tailored to meet your needs and exceed
+            your expectations.
+          </p>
 
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 justify-center">
-  {[
-    {
-      name: "John Doe",
-      review:
-        "“The journey was simply breathtaking. From the first moment to the last, every detail was handled perfectly. I can’t wait to book again!”",
-    },
-    {
-      name: "Jane Smith",
-      review:
-        "“This was hands-down the best vacation of my life. The places, the food, the people – everything felt like a dream. Thank you for such a flawless experience!”",
-    },
-    {
-      name: "Sam Wilson",
-      review:
-        "“Extremely professional and personalized. I felt taken care of at every step. Their service made the difference!”",
-    },
-    {
-      name: "Lisa Brown",
-      review:
-        "“Smooth booking, dreamy destinations, and unforgettable memories. You’ve earned a loyal traveler in me!”",
-    },
-  ].map((testimonial, i) => (
-    <div
-      key={i}
-      className="bg-gradient-to-br from-[#161b22] to-[#1f2937] p-8 rounded-3xl border border-[#1f6feb] hover:border-[#58a6ff] hover:shadow-[0_0_30px_#1f6feb] transition-all duration-300 group text-left max-w-xl mx-auto"
-    >
-      <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-[#58a6ff] transition-colors duration-300">
-        {testimonial.name}
-      </h3>
-      <p className="text-gray-400 text-lg leading-relaxed italic">
-        {testimonial.review}
-      </p>
-      <div className="mt-6 text-right">
-        <span className="text-sm text-[#58a6ff] font-semibold tracking-wide">
-          ★★★★★
-        </span>
+          {/* Team Section */}
+          <div className="flex items-center gap-4 mb-10">
+            <div className="flex -space-x-3">
+              <img src={teamImg1} alt="Team 1" className="w-10 h-10 rounded-full border-2 border-white" />
+              <img src={teamImg2} alt="Team 2" className="w-10 h-10 rounded-full border-2 border-white" />
+              <img src={teamImg3} alt="Team 3" className="w-10 h-10 rounded-full border-2 border-white" />
+            </div>
+            <span className="text-sm text-gray-200">Meet Our Professional Team</span>
+          </div>
+
+          {/* Stats */}
+          <div className="space-y-8">
+            <div className="flex items-center justify-between border-b pb-4">
+              <h3 className="text-4xl font-bold text-gray-200">92+</h3>
+              <p className="text-gray-200 text-right">Successful<br />Transactions Monthly</p>
+            </div>
+            <div className="flex items-center justify-between border-b pb-4">
+              <h3 className="text-4xl font-bold text-gray-200">90</h3>
+              <p className="text-gray-200 text-right">Customer<br />Satisfaction Rate</p>
+            </div>
+            <div className="flex items-center justify-between">
+              <h3 className="text-4xl font-bold text-gray-200">462</h3>
+              <p className="text-gray-200 text-right">Exquisite Properties<br />Ready for Your Selection</p>
+            </div>
+          </div>
+        </div>
+
+        
+        <div className="relative h-[85%]">
+          <img
+            src={heroImg}
+            alt="Dubai City"
+            className="w-full h-full object-cover rounded-3xl"
+          />
+
+          
+          <button className="absolute top-4 right-4 bg-white text-gray-800 px-4 py-2 rounded-full text-sm font-semibold shadow">
+            📞 Contact Us Now
+          </button>
+
+         
+          <div className="absolute bottom-4 left-4 bg-white px-4 py-3 rounded-xl shadow-lg flex items-center gap-3 w-[260px]">
+            <img
+              src={teamImg1}
+              alt="Expert"
+              className="w-10 h-10 rounded-full border-2 border-white"
+            />
+            <div>
+              <p className="text-xs text-gray-500">Special Offer</p>
+              <p className="text-sm font-medium text-gray-800">Get The Consultation<br />With Our Expert</p>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  ))}
-</div>
-</section>
-
+    </section>
 
     {/* Page 4: FAQ */}
-    <section className="bg-[#0d1117] py-20 px-6 text-center">
-<h2 className="text-5xl font-extrabold mb-16 text-white tracking-wide">
-  ❓ Frequently Asked Questions
-</h2>
+    <section className="bg-[#0d1117] py-20 px-6">
+  <div className="max-w-6xl mx-auto">
+    <p className="text-[#58a6ff] text-sm mb-4">• Explore Our Advantages</p>
+    <h2 className="text-white text-5xl font-bold mb-4 leading-tight">
+      Frequent Asked <br /> Questions
+    </h2>
+    <p className="text-gray-400 text-base mb-16 max-w-xl">
+      At Monte, we offer more than just real estate services; we provide an unparalleled experience tailored to meet your needs and exceed your expectations.
+    </p>
 
-<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 justify-center">
-  {[
-    {
-      question: "How do I book a trip?",
-      answer:
-        "You can book your dream destination directly on our website using our easy and secure booking system. It only takes a few minutes!",
-    },
-    {
-      question: "What payment methods do you accept?",
-      answer:
-        "We accept major credit/debit cards, PayPal, and bank transfers. Your payment information is always safe and encrypted.",
-    },
-    {
-      question: "Can I cancel or modify my booking?",
-      answer:
-        "Absolutely! Cancellations or modifications are possible, depending on the policy of the specific destination or package.",
-    },
-  ].map((faq, i) => (
-    <div
-      key={i}
-      className="bg-gradient-to-br from-[#161b22] to-[#1f2937] p-8 rounded-3xl border border-[#1f6feb] hover:border-[#58a6ff] hover:shadow-[0_0_30px_#1f6feb] transition-all duration-300 text-left group max-w-md mx-auto"
-    >
-      <h3 className="text-2xl font-semibold text-white mb-4 group-hover:text-[#58a6ff] transition-colors duration-300">
-        ❓ {faq.question}
-      </h3>
-      <p className="text-gray-400 text-base leading-relaxed">
-        {faq.answer}
-      </p>
+    <div className="bg-[#161b22] rounded-3xl overflow-hidden shadow-lg divide-y divide-[#1f6feb]">
+      {[
+        "What types of properties do we offer in Dubai?",
+        "What are the payment options available for purchasing a property?",
+        "Can foreign nationals buy property in Dubai?",
+        "What is the process for obtaining a residency visa through property investment?",
+        "Are there any additional costs associated with property ownership in Dubai?",
+        "Do we offer property management services for rental properties?",
+        "Can we assist with property financing for non-resident buyers?",
+      ].map((question, index) => (
+        <div
+          key={index}
+          className="flex justify-between items-center py-6 px-8 hover:bg-[#1a1f2c] transition-all duration-300 cursor-pointer"
+        >
+          <span className="text-white text-lg font-medium">
+            {question}
+          </span>
+          <span className="text-[#58a6ff] text-2xl font-bold">+</span>
+        </div>
+      ))}
     </div>
-  ))}
-</div>
+  </div>
 </section>
+
 
 
     {/* Page 5: Packages */}
@@ -372,6 +447,10 @@ export default function LandingPage() {
 
 <section>
   <FlightBookingUI />
+</section>
+
+<section>
+  <SmartOwnershipAnimation />
 </section>
 
 
